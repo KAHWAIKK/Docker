@@ -1,0 +1,89 @@
+docker run command 
+
+is used to start a new container from a Docker image. It’s one of the most commonly used Docker commands.
+
+docker run nginx
+This pulls the latest nginx image (if not already downloaded) and starts a container using it.
+
+docker ps
+shows running containers on your system.
+
+docker ps -a
+shows all containers on your system — not just the running ones, but also stopped, exited, or created ones.
+
+Action	          Command
+
+docker logs -     View logs of a container	 <container-name>
+
+docker start  -   Start a stopped container	<container-name>
+
+docker stop    -   Stop a running container	docker stop <container-name>
+
+docker rm <container-name> -  Remove a container
+
+docker container prune  -  Remove all stopped containers	
+
+docker images
+lists all Docker images that are currently downloaded (cached) on your system.
+
+
+Command                        Action
+
+docker rmi <image-name-or-ID>  -Remove an image	
+
+docker image prune -Remove all unused images	
+
+docker pull <image-name> - Pull an image manually	
+
+docker run -d
+The command docker run -d is used to start a container in detached mode, meaning it runs in the background — like a daemon (hence the -d flag).
+
+But on its own, docker run -d is incomplete. You need to specify at least:
+
+    The image name
+
+docker ps -q lists only the IDs of running containers.
+
+Docker & Linux Commands Summary
+docker run -d --name redis-server redis
+- Runs a Redis container in detached mode, named 'redis-server'.
+docker stop redis-server
+- Stops the running Redis container.
+docker ps
+- Lists only running containers.
+docker ps -a
+- Lists all containers, including stopped ones.
+docker rm redis-server
+- Deletes the specified container.
+docker start redis-server
+- Starts a previously stopped container.
+docker logs redis-server
+- Shows logs from the 'redis-server' container.
+docker inspect <container>
+- Detailed info (JSON format) about the container.
+docker inspect --format '{{.State.Status}}' <container_id>
+- Shows container state (e.g., running, exited).
+docker images
+- Lists all images on the host.
+Docker & Linux Command Summary
+docker rmi ubuntu
+- Deletes the Ubuntu image.
+docker rmi -f $(docker images -q)
+- Deletes all images forcefully.
+docker image prune -a
+- Deletes all unused images (not used by any container).
+docker stop $(docker ps -q)
+- Stops all running containers.
+docker rm $(docker ps -a -q)
+- Deletes all containers (must be stopped first).
+docker system prune -a --volumes
+- Deletes unused containers, networks, volumes, and images.
+docker ps -q | wc -l
+- Counts the number of running containers.
+docker ps -a --filter ancestor=ubuntu --format "{{.Names}}"
+- Gets the name of containers created from the Ubuntu image.
+docker inspect --format='{{.Config.Image}}' nginx-1
+- Shows the image used to create the 'nginx-1' container.
+docker inspect --format '{{.State.Status}}' $(docker ps -a --filter ancestor=alpine --filter status=exited --format "{{.ID}}")
+- Shows the state of stopped containers using the Alpine image.
+docker run -d --name webapp nginx:1.14-alpine
